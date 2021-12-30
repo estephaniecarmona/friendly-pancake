@@ -34,6 +34,24 @@ ${saveProgress['1']}  | ${saveProgress['2']}   | ${saveProgress['3']}
 `)
 }
 
+var playerOne = [
+   '1'
+];
+
+var playerTwo = [
+   '2'
+];
+
+var playerTurn = playerOne;//whose turn
+console.log(playerTurn)
+
+function whoseTurn(playerTurn) {
+   if (playerTurn[0] === '1') {
+      return playerTwo;
+   }
+   return playerOne;
+}
+
 
 
 console.log("game start")
@@ -41,14 +59,15 @@ console.log("game start")
 console.log("player 1 is X, player 2 is O")
 
 var saveProgress = {
-   
-   
+    
 }
+
 while (true){
 
   drawBoard(saveProgress)
-  const playerTurn = 1;
-    const move = prompt(`player ${playerTurn} turn: `);
-    console.log(`${move}`);
+    playerTurn = whoseTurn(playerTurn);
+    const move = prompt(`player ${playerTurn} turn: `); //move 1
+    
+    console.log(`move ${move}`);
     placeMove(move, saveProgress);
 }
