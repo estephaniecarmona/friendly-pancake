@@ -16,8 +16,9 @@ var tictactoeKeys = {
 
 var possibleWins = [[1, 2, 3], [4, 5, 6], [7, 8, 9], [1, 4, 7], [3, 6, 9], [1, 5, 9], [3, 5, 7]]
 
-function placeMove(move, saveProgress) {
-   saveProgress[move] = "X" 
+function saveMove(move, saveProgress) {
+   saveProgress[move] = playerTurn[1];
+
 //placement of the x's and o's in the saveProgress
 //update saveProgress with 'move'
 console.log(saveProgress)
@@ -35,17 +36,19 @@ ${saveProgress['1']}  | ${saveProgress['2']}   | ${saveProgress['3']}
 }
 
 var playerOne = [
-   '1'
+   '1',
+   'X'
 ];
 
 var playerTwo = [
-   '2'
+   '2',
+   'O'
 ];
 
-var playerTurn = playerOne;//whose turn
+var playerTurn = playerOne;
 console.log(playerTurn)
 
-function whoseTurn(playerTurn) {
+function changeTurn(playerTurn) {//change turn
    if (playerTurn[0] === '1') {
       return playerTwo;
    }
@@ -64,10 +67,13 @@ var saveProgress = {
 
 while (true){
 
-  drawBoard(saveProgress)
-    playerTurn = whoseTurn(playerTurn);
-    const move = prompt(`player ${playerTurn} turn: `); //move 1
-    
+  drawBoard(saveProgress) 
+    const move = prompt(`player ${playerTurn[0]} turn: `); //move 1
+    playerTurn = changeTurn(playerTurn);
     console.log(`move ${move}`);
-    placeMove(move, saveProgress);
+    saveMove(move, saveProgress);
 }
+
+
+
+
