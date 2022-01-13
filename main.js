@@ -14,27 +14,48 @@ var tictactoeKeys = {
 
 
 
-var possibleWins = [[1, 2, 3], [4, 5, 6], [7, 8, 9], [1, 4, 7], [3, 6, 9], [1, 5, 9], [3, 5, 7]]
+var possibleWins = [[1, 2, 3], [4, 5, 6], [7, 8, 9], [1, 4, 7], [3, 6, 9], [1, 5, 9], [3, 5, 7], [2, 5, 8]]
 //placement of the x's and o's in the saveProgress
 //update saveProgress with 'move'
 // returns nothing
 
-function winner(possibleWins, saveProgress){
-   if (saveProgress === possibleWins){
-      ending = "game over";
-   } else {
-      ending = "draw";
+function winner(){   
+   for (var i = 0; i < possibleWins.length; i++){ //loops through 1st array
+      for (var j = 0; j < possibleWins[i].length; j++){ //loops through 2nd array
+         if (saveProgress[possibleWins[i][0]] === 'X') { //looks through 2nd array 1st element to see if it equal 'X'
+            if (saveProgress[possibleWins[i][1]] === 'X') { //looks through 2nd element to see if equals 'X'
+               if (saveProgress[possibleWins[i][2]] === 'X') { //looks through 3rd element to see if it equal 'X"
+                  return true;
+               }
+            }
+         }
+         if (saveProgress[possibleWins[i][0]] === 'O') {
+            if (saveProgress[possibleWins[i][1]] === 'O') {
+               if (saveProgress[possibleWins[i][2]] === 'O') {
+                  return true;
+               } 
+            }
+         }
+      }
+   
    }
-
 }
+
+
+function checkDraw() {
+   const isXorO = (value) => value === 'X' || value === 'O'
+   const valuesInSaveProgress = Object.values(saveProgress)
+   console.log(valuesInSaveProgress.every(isXorO))
+   return valuesInSaveProgress.every(isXorO)
+}
+      
+      
+
+   
+
 
 // give back true or false (boolean)
 function noRepeats(saveProgress, move) {
-   //shows saved progress
-   // if(saveProgress[move] === ' ') {
-   //    return true;
-   // } 
-   // return false
    return saveProgress[move] === ' ';
 }
    
@@ -79,7 +100,6 @@ function changeTurn(playerTurn) {//change turn
 }
 
 
-
 console.log("game start")
 
 console.log("player 1 is X, player 2 is O")
@@ -97,6 +117,7 @@ var saveProgress = {
 }
 
 while (true){
+   
    drawBoard(saveProgress) 
    const move = prompt(`player ${playerTurn[0]} turn: `); //move has a number that is a string 
    console.log(`move ${move}`); //player move
@@ -106,6 +127,12 @@ while (true){
       saveMove(move, saveProgress); // save move
    }
    
+   if (winner()) {
+      return console.log (`player ${playerTurn[0]} won`)
+   }
+   if (checkDraw()) {
+      return console.log(`draw`)
+   }
    playerTurn = changeTurn(playerTurn);  //next player turn
 
 }
